@@ -226,15 +226,15 @@ def editarProveedor(provider_id):
 def actualizarProveedor(provider_id):
     if request.method == 'POST':
         connectDB = sql_connection()
-        providermame = request.form['providermame']
+        providername = request.form['providername']
         products = request.form['products']
         phone = request.form['phone']
         celular = request.form['celular']
         email = request.form['email']
         location = request.form['location']
         cur = connectDB.cursor()
-        consulta = "UPDATE providers SET providermame = ?, products = ?, phone = ?, celular = ?, email = ?, location = ? WHERE provider_id = ?"
-        cur.execute(consulta, [providermame, products, phone, celular, email, location, provider_id])
+        consulta = "UPDATE providers SET providername = ?, products = ?, phone = ?, celular = ?, email = ?, location = ? WHERE provider_id = ?"
+        cur.execute(consulta, [providername, products, phone, celular, email, location, provider_id])
         connectDB.commit()
         cur.close
         return redirect(url_for('panelProveedores'))
