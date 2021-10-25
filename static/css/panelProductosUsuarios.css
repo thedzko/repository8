@@ -78,10 +78,16 @@
     height: 100%;
     width: 100%;
     padding: 0 1% 0 10%;
-    outline: none;
     border: var(--panels-border);
     border-radius: var(--panels-border-radius);
     background-color: var(--header-search-background-color);
+    -webkit-appearance: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     transition-duration: var(--transition-hover-1);
 }
 
@@ -146,11 +152,11 @@
     margin: 6% 0 6% 10%;
 }
 
-.item-3 {
+.item-2 {
     border-left: var(--sidepanel-active-border);
 }
 
-.item-3>h2 {
+.item-2>h2 {
     font-weight: var(--sidepanel-active-font-weight);
     color: var(--sidepanel-font-active-color);
 }
@@ -177,14 +183,13 @@
     width: 100%;
 }
 
+
 .content-container {
     position: relative;
     height: 100%;
     width: 85%;
     min-width: 100px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .content-container::before {
@@ -202,7 +207,6 @@
 }
 
 .container-img {
-    position:relative;
     width: 24%;
     display: flex;
     justify-content: flex-start;
@@ -291,7 +295,7 @@
 .thead {
     border-bottom: var(--panels-border);
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(6, 1fr);
 }
 
 .thi {
@@ -322,7 +326,7 @@
     height: 17%;
     min-height: 95px;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(6, 1fr);
 }
 
 .tci {
@@ -335,7 +339,6 @@
 .tci h2 {
     font-size: var(--font-size);
     font-weight: var(--dashboard-content-font-weight);
-    text-align: center;
 }
 
 .tci-1 a {
@@ -407,18 +410,11 @@
 /* Header */
 
 .header-right-button:hover {
-    box-shadow: var(--button-box-shadow);
+    box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.35);
 }
 
 .search-text:hover {
-    box-shadow: var(--input-text-box-shadow);
-}
-
-.search-text:focus {
-    border-top: 2px solid transparent;
-    border-bottom: 2px solid transparent;
-    border-bottom: 2px solid #000000;
-    transition-duration: 0s;
+    box-shadow: 0 2px 6px 1px rgba(230, 230, 230, 0.85);
 }
 
 .item:hover,
@@ -431,7 +427,7 @@
 }
 
 .tci-del-container:hover {
-    background-color: var(--dashboard-hover-button-del-background-color);
+    background-color: #B50D0D;
 }
 
 

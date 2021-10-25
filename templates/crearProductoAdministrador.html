@@ -2,8 +2,8 @@
 
 <!-- Head -->
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/credProveedor.css') }}">
-<title>Proveedor</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/credProducto.css') }}">
+<title>Producto</title>
 {% endblock %}
 
 <!-- Body -->
@@ -45,7 +45,7 @@
             <div class="left-content">
                 <nav class="top-content">
                     <!-- Items -->
-                    <a href="/proveedores/" class="item item-1">
+                    <a href="/productosAdmin/" class="item item-1">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--sidepanel-font-active-color)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
                         <h2>Volver</h2>
                     </a>
@@ -58,6 +58,7 @@
                         <button accept="image/jpg, image/jpeg, image/png, image/weebp, image/JPG, image/PNG, image/WEBP" type="file" class='button-image'>Cambiar imagen</button>
                     </div>
                 </div>
+                
             </div>
 
 
@@ -68,41 +69,47 @@
         <div class="content-right">
             <!-- Panel hijo -->
             <div class="right-content">
-                <form action="/updateprovider/{{providers.0}}" method="post" id="frm-test">
+                <form action="/newProductAdmin/" method="post" id="frm-test">
                     <div class="frow frow-1">
                         <div class="fitem fitem1-1">
-                            <input type="text" id="providername" name="providername" value="{{providers.1}}" required>
-                            <label for="providername">Nombre del Proveedor</label>
+                            <input type="text" id="productname" name="productname" required>
+                            <label for="productname">Nombre del Producto</label>
                         </div>
                         <div class="fitem fitem1-2">
-                            <h2>{{providers.0}}</h2>
+                            <h2>Identificador</h2>
                         </div>
                     </div>
                     <div class="frow frow-2">
                         <div class="fitem fitem2-1">
-                            <input type="email" id="email" name="email" value="{{providers.5}}" required>
-                            <label for="email">Correo Electrónico</label>
+                            <input type="text" id="providers" name="providers" required>
+                            <label for="providers">Nombre del Proveedor</label>
                         </div>
                         <div class="fitem fitem2-2">
-                            <input type="number" id="phone" name="phone" value="{{providers.3}}" required>
-                            <label for="phone">Teléfono</label>
+                            <input type="number" id="available_amount" name="available_amount" required>
+                            <label for="available_amount">Cantidad Disp.</label>
                         </div>
                         <div class="fitem fitem2-3">
-                            <input type="number" id="celular" name="celular" value="{{providers.4}}" required>
-                            <label for="celular">Celular</label>
-                        </div>
-                        <div class="fitem fitem2-4">
-                            <input type="text" id="location" name="location" value="{{providers.6}}" required>
-                            <label for="location">Ubicación</label>
+                            <input type="number" id="least_amount" name="least_amount" required>
+                            <label for="least_amount">Cantidad Min.</label>
                         </div>
                     </div>
                     <div class="frow frow-3">
-                        <textarea name="products" id="products" cols="30" rows="10" class="fitem fitem3-1" placeholder="Productos Ofrecidos">{{providers.2}}</textarea>
+                        <textarea name="product_description" id="product_description" cols="30" rows="10" class="fitem fitem3-1" placeholder="Descripción"></textarea>
                     </div>
                     <div class="frow frow-4">
+                        <div class="fdiv fdiv-1">
+                            <div class="fitem fitem4-1">
+                                <input type="number" id="product_retail" name="product_retail" required>
+                                <label for="product_retail">Retail Price</label>
+                            </div>
+                            <div class="fitem fitem4-2">
+                                <input type="number" id="product_trade" name="product_trade" required>
+                                <label for="product_trade">Trade Price</label>
+                            </div>
+                        </div>
                         <div class="fdiv fdiv-2">
                             <button type="submit" class="dbutton dbutton-1">Guardar</button>
-                            <a href="/proveedores/" class="dbutton dbutton-2">
+                            <a href="/productosAdmin/" class="dbutton dbutton-2">
                                 <h2>Cancelar</h2>
                             </a>
                         </div>

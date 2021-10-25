@@ -166,20 +166,19 @@
     justify-content: center;
 }
 
-.content-container {
+.content-container-saludo{
     position: relative;
-    height: 100%;
-    width: 85%;
-    min-width: 100px;
     display: flex;
+    align-items: center;
+    justify-content: space-between; 
 }
 
-.content-container::before {
+.content-container-saludo::before {
     content: "";
-    border: 1px solid transparent;
+    border: 10px solid transparent;
     border-top: var(--sidepanel-border);
     position: absolute;
-    top: -40%;
+    top: -70%;
     height: 100%;
     width: 100%;
 }
@@ -203,9 +202,11 @@
 
 .container-text {
     width: 56%;
+    height: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-left: 1cm;
 }
 
 .text-role {
@@ -444,3 +445,4 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #000000;
 }
+

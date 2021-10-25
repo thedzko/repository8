@@ -274,13 +274,20 @@ button {
 
 .fitem1-1 {
     grid-column-start: 1;
-    grid-column-end: 7;
+    grid-column-end: 4;
 }
 
 .fitem1-2 {
-    grid-column-start: 7;
+    grid-column-start: 4;
+    grid-column-end: 6;
+}
+
+.fitem1-3 {
+    grid-column-start: 6;
     grid-column-end: 8;
 }
+
+
 
 .fdiv {
     display: grid;

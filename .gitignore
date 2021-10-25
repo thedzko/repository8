@@ -1,0 +1,39 @@
+.DS_Store
+.env
+.flaskenv
+*.pyc
+*.pyo
+env/
+venv/
+.venv/
+env*
+dist/
+build/
+*.egg
+*.egg-info/
+_mailinglist
+.tox/
+.cache/
+.pytest_cache/
+.idea/
+docs/_build/
+.vscode
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+*,cover
+
+----------------------------------
+1. Abrir el proyecto en VSCode
+2. Abrir la consola y activar el entorno virtual
+3. Generar listado de librerias necesarias --> pip freeze > requirements.txt
+4. Inicializar git --> git init 
+5. Crear el .gitignore, para ignorar el entorno vitual (venv)
+6. Crea el repositorio en la nube
+7. Conecta con el repositorio en la nube --> git remote add origin https://gitlab.com/rbperez/siv.git
+8. Preparar los archivos a subir en el repositorio --> git add .
+9. Agregar comentario --> git commit -m "Inicio
+
+

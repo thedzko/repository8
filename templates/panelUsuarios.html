@@ -15,9 +15,10 @@
         <!-- Contenido izquierdo -->
         <div class="header-left">
             <div class="header-left-content">
-                <a href="./index.html" class="link-logo">
+                <a href="#" class="link-logo">
                     <img src="../static/img/logo.svg" alt="" class="header-left-logo">
                 </a>
+                
             </div>
         </div>
         <!-- Contenido derecho -->
@@ -62,17 +63,19 @@
                 <!-- Contenido inferior -->
                 <div class="bottom-content">
                     <!-- Contenedor -->
-                    <div class="content-container">
+                    <div class="content-container-saludo">
                         <!-- Items -->
-                        <div class="container-img">
-                            <img src="../static/img/mmc.jpg" alt="" class="img-profile">
-                        </div>
                         <div class="container-text">
-                            <h3 class="text-role">Superadministrador</h3>
-                            <h2 class="text-name">Mauricio Mercado Contreras</h2>
+                            {%if session.role == "Superadministrador" %}
+                                <h2 class="text-name">Bienvenido Superadministrador {{session["usuario"]}}</h2>
+                            {%else%}
+                                <h3 class="text-name">Hola, Usuario {{session["usuario"]}}</h3> 
+                            {%endif%}
+                            <!--<h3 class="text-role">Superadministrador</h3>
+                            <h2 class="text-name">Mauricio Mercado Contreras</h2>-->
                         </div>
                         <div class="container-icon">
-                            <a href="">
+                            <a href="/logout">
                                 <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" class="icon-svg"><g><path d="M0,0h24v24H0V0z" fill="none"/></g><g><path d="M17,8l-1.41,1.41L17.17,11H9v2h8.17l-1.58,1.58L17,16l4-4L17,8z M5,5h7V3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h7v-2H5V5z"/></g></svg>
                             </a>
                         </div>

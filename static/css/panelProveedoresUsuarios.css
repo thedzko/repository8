@@ -159,7 +159,6 @@
     display: flex;
     justify-content: center;
 }
-
 .content-container-saludo{
     position: relative;
     display: flex;
@@ -177,14 +176,13 @@
     width: 100%;
 }
 
+
 .content-container {
     position: relative;
     height: 100%;
     width: 85%;
     min-width: 100px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .content-container::before {
@@ -202,7 +200,6 @@
 }
 
 .container-img {
-    position:relative;
     width: 24%;
     display: flex;
     justify-content: flex-start;
@@ -291,7 +288,7 @@
 .thead {
     border-bottom: var(--panels-border);
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(6, 1fr);
 }
 
 .thi {
@@ -322,7 +319,7 @@
     height: 17%;
     min-height: 95px;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(6, 1fr);
 }
 
 .tci {
