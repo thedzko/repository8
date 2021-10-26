@@ -66,8 +66,8 @@
                     <div class="content-container-saludo">
                         <!-- Items -->
                         <div class="container-text">
-                            {%if session.role == "Administrador" %}
-                            <h3 class="text-role">Administrador</h3>
+                            {%if session.role == "Superadministrador" %}
+                            <h3 class="text-role">Superadministrador</h3>
                             <h2 class="text-name">{{session["usuario"]}}</h2>
                             {%else%}
                             <h3 class="text-role">Usuario</h3>
