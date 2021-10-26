@@ -92,8 +92,7 @@ button {
 
 .button-1,
 .button-2 {
-    width: 40%;
-
+    width: 100%;
 }
 
 .button-1 {
@@ -143,7 +142,8 @@ button:hover {
 }
 
 input:focus~label,
-input:valid~label {
+input:valid~label,
+input:-webkit-autofill {
     padding: 0 1% 0 1%;
     top: -15%;
     left: 0;
@@ -153,7 +153,8 @@ input:valid~label {
 }
 
 input:focus,
-input:valid {
+input:valid,
+input:-webkit-autofill {
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
     border-bottom: 2px solid #000000;

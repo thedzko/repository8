@@ -153,6 +153,11 @@
     align-items: center;
 }
 
+.bottom-form {
+    height: 100%;
+    width: 100%;
+}
+
 .bottom-content>div {
     margin-bottom: 5%;
     display: flex;

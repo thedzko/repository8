@@ -18,7 +18,7 @@
                 <a href="#" class="link-logo">
                     <img src="../static/img/logo.svg" alt="" class="header-left-logo">
                 </a>
-                
+
             </div>
         </div>
         <!-- Contenido derecho -->
@@ -65,15 +65,13 @@
                     <!-- Contenedor -->
                     <div class="content-container-saludo">
                         <!-- Items -->
-                    
                         <div class="container-text">
-                            {%if session.perfil== "Administrador" %}
-                                <div class= "text-name">Bienvenido Administrador {{session["usuario"]}}</div>
-                             {%else%}
-                                 <h2 class= "text-name">Hola, Usuario {{session["usuario"]}}</h2>
-                            {%endif%}
-                            <!--<h3 class="text-role">Superadministrador</h3>
-                            <h2 class="text-name">Mauricio Mercado Contreras</h2>-->
+                            {%if session.role == "Administrador" %}
+                            <h3 class="text-role">Administrador</h3>
+                            <h2 class="text-name">{{session["usuario"]}}</h2>
+                            {%else%}
+                            <h3 class="text-role">Usuario</h3>
+                            <h2 class="text-name">{{session["usuario"]}}</h3>{%endif%}
                         </div>
                         <div class="container-icon">
                             <a href="/logout">
@@ -154,7 +152,7 @@
                             </a>
                         </div>
                         <div class="tci tci-7">
-                          <!-- <a href="/editproduct/{{product.0}}" class="tci-edit-link">
+                            <!-- <a href="/editproduct/{{product.0}}" class="tci-edit-link">
                                 <div class="tci-edit-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" class="tci-edit"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
                                 </div>
