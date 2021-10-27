@@ -54,13 +54,8 @@
                     <div class="content-image">
                         <img src="" alt="" class="image-visualizer">
                     </div>
-                    <div class="content-submit">
-                        <button accept="image/jpg, image/jpeg, image/png, image/weebp, image/JPG, image/PNG, image/WEBP" type="file" class='button-image'>Cambiar imagen</button>
-                    </div>
                 </div>
             </div>
-
-
         </div>
 
 
@@ -68,7 +63,7 @@
         <div class="content-right">
             <!-- Panel hijo -->
             <div class="right-content">
-                <form action="/newProduct/" method="post" id="frm-test">
+                <form action="/newProduct/" method="post" id="form-2" enctype="multipart/form-data">
                     <div class="frow frow-1">
                         <div class="fitem fitem1-1">
                             <input type="text" id="productname" name="productname" required>
@@ -105,10 +100,13 @@
                                 <input type="number" id="product_trade" name="product_trade" required>
                                 <label for="product_trade">Trade Price</label>
                             </div>
+                            <div class="fitem fitem4-3">
+                                <input type="file" id="img" class="img" name="product_img" accept="image/jpg, image/jpeg, image/png, image/weebp, image/JPG, image/PNG, image/WEBP">
+                            </div>
                         </div>
-                        <div class="fdiv fdiv-2">
-                            <button type="submit" class="dbutton dbutton-1">Guardar</button>
-                            <a href="/productos/" class="dbutton dbutton-2">
+                        <div class="fdiv fdiv-2 ">
+                            <button type="submit " class="dbutton dbutton-1">Guardar</button>
+                            <a href="/productos/ " class="dbutton dbutton-2 ">
                                 <h2>Cancelar</h2>
                             </a>
                         </div>

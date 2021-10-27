@@ -178,7 +178,6 @@
 
 .content-container-saludo::before {
     content: "";
-    border: 10px solid transparent;
     border-top: var(--sidepanel-border);
     position: absolute;
     top: -70%;

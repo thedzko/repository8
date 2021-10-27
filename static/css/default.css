@@ -15,7 +15,7 @@
     --font-regular: 400;
     --font-semibold: 600;
     --font-bold: 700;
-    --panels-border-radius: 4px;
+    --panels-border-radius: calc(1rem*0.3);
     --panels-border: 1px solid #d7d7d7;
     --sidepanel-button-border: 1px solid #FFFFFF;
     --transition-hover-1: 0.5s;

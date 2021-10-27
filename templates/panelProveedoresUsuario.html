@@ -66,12 +66,11 @@
                         <!-- Items -->
                         <div class="container-text">
                             {%if session.role == "Administrador" %}
-                                <h2 class="text-name">Bienvenido Administrador {{session["usuario"]}}</h2>
+                            <h3 class="text-role">Administrador</h3>
+                            <h2 class="text-name">{{session["usuario"]}}</h2>
                             {%else%}
-                                <h3 class="text-name">Hola, Usuario {{session["usuario"]}}</h3> 
-                            {%endif%}
-                            <!--<h3 class="text-role">Superadministrador</h3>
-                            <h2 class="text-name">Mauricio Mercado Contreras</h2>-->
+                            <h3 class="text-role">Usuario</h3>
+                            <h2 class="text-name">{{session["usuario"]}}</h3>{%endif%}
                         </div>
                         <div class="container-icon">
                             <a href="/logout">
@@ -123,7 +122,7 @@
                         <!-- Columnas/Items -->
                         <div class="tci tci-1">
                             <a href="/showproviderusu/{{provider.0}}">
-                                <img src="../static/img/yokohama.png" alt="" class="tci-img">
+                                <img src="/static/img/uploads/provider/{{provider['provider_img']}}" alt="" class="tci-img">
                             </a>
                         </div>
                         <div class="tci tci-2">

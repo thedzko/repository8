@@ -51,15 +51,10 @@
                 </nav>
                 <div class="bottom-content">
                     <div class="content-image">
-                        <img src="" alt="" class="image-visualizer">
-                    </div>
-                    <div class="content-submit">
-                        <button accept="image/jpg, image/jpeg, image/png, image/weebp, image/JPG, image/PNG, image/WEBP" type="file" class='button-image'>Cambiar imagen</button>
+                        <img src="../static/img/uploads/product/{{products.8}}" alt="" class="image-visualizer">
                     </div>
                 </div>
             </div>
-
-
         </div>
 
 
@@ -67,7 +62,7 @@
         <div class="content-right">
             <!-- Panel hijo -->
             <div class="right-content">
-                <form action="/updateproduct/{{products.0}}" method="post" id="frm-test">
+                <form action="/updateproduct/{{products.0}}/" method="post" id="frm-test" enctype="multipart/form-data">
                     <div class="frow frow-1">
                         <div class="fitem fitem1-1">
                             <input type="text" id="productname" name="productname" value="{{products.1}}" required>
@@ -103,6 +98,9 @@
                             <div class="fitem fitem4-2">
                                 <input type="number" id="product_trade" name="product_trade" value="{{products.7}}" required>
                                 <label for="product_trade">Trade Price</label>
+                            </div>
+                            <div class="fitem fitem4-3">
+                                <input type="file" id="img" class="img" name="product_img" value="{{products.product_img}}" accept="image/jpg, image/jpeg, image/png, image/weebp, image/JPG, image/PNG, image/WEBP">
                             </div>
                         </div>
                         <div class="fdiv fdiv-2">

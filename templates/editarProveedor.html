@@ -52,15 +52,10 @@
                 </nav>
                 <div class="bottom-content">
                     <div class="content-image">
-                        <img src="" alt="" class="image-visualizer">
-                    </div>
-                    <div class="content-submit">
-                        <button accept="image/jpg, image/jpeg, image/png, image/weebp, image/JPG, image/PNG, image/WEBP" type="file" class='button-image'>Cambiar imagen</button>
+                        <img src="../static/img/uploads/provider/{{providers.7}}" alt="" class="image-visualizer">
                     </div>
                 </div>
             </div>
-
-
         </div>
 
 
@@ -68,7 +63,7 @@
         <div class="content-right">
             <!-- Panel hijo -->
             <div class="right-content">
-                <form action="/updateprovider/{{providers.0}}" method="post" id="frm-test">
+                <form action="/updateprovider/{{providers.0}}" method="post" id="frm-test" enctype="multipart/form-data">
                     <div class="frow frow-1">
                         <div class="fitem fitem1-1">
                             <input type="text" id="providername" name="providername" value="{{providers.1}}" required>
@@ -100,6 +95,11 @@
                         <textarea name="products" id="products" cols="30" rows="10" class="fitem fitem3-1" placeholder="Productos Ofrecidos">{{providers.2}}</textarea>
                     </div>
                     <div class="frow frow-4">
+                        <div class="fdiv fdiv-1">
+                            <div class="fitem fitem4-3">
+                                <input type="file" id="img" class="img" name="provider_img" accept="image/jpg, image/jpeg, image/png, image/weebp, image/JPG, image/PNG, image/WEBP">
+                            </div>
+                        </div>
                         <div class="fdiv fdiv-2">
                             <button type="submit" class="dbutton dbutton-1">Guardar</button>
                             <a href="/proveedores/" class="dbutton dbutton-2">

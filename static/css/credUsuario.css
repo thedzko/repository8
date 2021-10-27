@@ -193,8 +193,13 @@
     width: 50%;
 }
 
+.content-submit>input {
+    background-color: firebrick;
+}
+
 .button-image {
     background-color: transparent;
+    background-color: darkblue;
     border: var(--sidepanel-button-border);
     border-radius: var(--panels-border-radius);
     color: var(--sidepanel-font-active-color);
@@ -235,7 +240,7 @@ form {
     column-gap: 16px;
 }
 
-input {
+.frow input {
     height: 100%;
     width: 100%;
     font-size: var(--font-size);
@@ -251,7 +256,7 @@ input {
     border-radius: var(--panels-border-radius);
 }
 
-label {
+.frow label {
     position: absolute;
     top: 16px;
     left: 16px;
@@ -262,7 +267,7 @@ label {
     transition: var(--transition-focus-1);
 }
 
-button {
+.frow button {
     font-family: var(--font-family);
     font-weight: var(--header-button-font-weight);
     cursor: pointer;
@@ -299,8 +304,37 @@ button {
 }
 
 .fdiv-1 {
+    grid-template-columns: 1fr;
     grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-end: 2;
+}
+
+#img {
+    padding: 0;
+}
+
+.img {
+    background-color: #000000;
+    border-radius: var(--panels-border-radius);
+    position: relative;
+    outline: none;
+    cursor: pointer;
+}
+
+.img::before {
+    content: 'Cambiar imagen';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    vertical-align: middle;
+}
+
+.img::-webkit-file-upload-button {
+    visibility: hidden;
 }
 
 .fdiv-2 {

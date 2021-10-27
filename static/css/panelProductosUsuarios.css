@@ -196,7 +196,6 @@
 
 .content-container::before {
     content: "";
-    border: 1px solid transparent;
     border-top: var(--sidepanel-border);
     position: absolute;
     top: -40%;

@@ -329,6 +329,39 @@ button {
     column-gap: 16px;
 }
 
+.fdiv-1 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+#img {
+    padding: 0;
+}
+
+.img {
+    background-color: #000000;
+    border-radius: var(--panels-border-radius);
+    position: relative;
+    outline: none;
+    cursor: pointer;
+}
+
+.img::before {
+    content: 'Cambiar imagen';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    vertical-align: middle;
+}
+
+.img::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
 .fdiv-2 {
     grid-column-start: 7;
     grid-column-end: 9;

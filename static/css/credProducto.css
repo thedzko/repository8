@@ -188,20 +188,6 @@
     height: 100%;
 }
 
-.content-submit {
-    height: 48px;
-    width: 50%;
-}
-
-.button-image {
-    background-color: transparent;
-    border: var(--sidepanel-button-border);
-    border-radius: var(--panels-border-radius);
-    color: var(--sidepanel-font-active-color);
-    height: 100%;
-    width: 100%;
-}
-
 
 /* Panel Derecho */
 
@@ -218,7 +204,7 @@
     width: 94%;
 }
 
-form {
+.right-content form {
     height: 100%;
     width: 100%;
     display: flex;
@@ -235,8 +221,8 @@ form {
     column-gap: 16px;
 }
 
-input,
-textarea {
+.frow input,
+.frow textarea {
     height: 100%;
     width: 100%;
     font-size: var(--font-size);
@@ -245,7 +231,7 @@ textarea {
     outline: none;
 }
 
-textarea {
+.frow textarea {
     padding-top: 1%;
     resize: vertical;
     overflow: auto;
@@ -258,7 +244,7 @@ textarea {
     border-radius: var(--panels-border-radius);
 }
 
-label {
+.right-content label {
     position: absolute;
     top: 16px;
     left: 16px;
@@ -330,8 +316,37 @@ button {
 }
 
 .fdiv-1 {
+    grid-template-columns: 1fr 1fr 1fr;
     grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-end: 4;
+}
+
+#img {
+    padding: 0;
+}
+
+.img {
+    background-color: #000000;
+    border-radius: var(--panels-border-radius);
+    position: relative;
+    outline: none;
+    cursor: pointer;
+}
+
+.img::before {
+    content: 'Cambiar imagen';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    vertical-align: middle;
+}
+
+.img::-webkit-file-upload-button {
+    visibility: hidden;
 }
 
 .fdiv-2 {
@@ -392,12 +407,12 @@ button {
 
 /* Derecho */
 
-input:hover {
+.frow input:hover {
     box-shadow: var(--input-text-box-shadow);
 }
 
-input:focus~label,
-input:valid~label {
+.frow input:focus~label,
+.frow input:valid~label {
     /* padding: 0 1% 0 1%; */
     top: -16px;
     left: 0;
@@ -406,8 +421,8 @@ input:valid~label {
     font-size: calc(var(--font-size)*0.8);
 }
 
-input:focus,
-input:valid {
+.frow input:focus,
+.frow input:valid {
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
     border-bottom: 2px solid #000000;

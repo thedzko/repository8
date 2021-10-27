@@ -4,13 +4,16 @@ from datetime import date, datetime
 # Importación SQLite
 import sqlite3
 import os
-from werkzeug.utils import escape
+from werkzeug.utils import escape, secure_filename
 import hashlib
 
 from flask.helpers import flash
 
 app = Flask (__name__)
 app.secret_key=os.urandom(24)
+app.config['USER_IMAGE_UPLOADS'] = "static/img/uploads/user"
+app.config['PRODUCT_IMAGE_UPLOADS'] = "static/img/uploads/product"
+app.config['PROVIDER_IMAGE_UPLOADS'] = "static/img/uploads/provider"
 
 
 # Conectar base de datos SQLite
@@ -82,13 +85,13 @@ def home():
 def panelUsuarios():
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM users")
         #Nueva variable para que traiga todo lo de la tabla
         user_data = cur.fetchall()
         return render_template('panelUsuarios.html', users = user_data)
     return redirect("/")
-
 
 # POST - USER
 @app.route('/newUser', methods=['GET','POST'])
@@ -102,10 +105,13 @@ def crearUsuario():
             pass_enc= enc.hexdigest()
             user_join =escape(datetime.now())
             user_age = escape(datetime.now())
+            user_img = request.files['user_img']            
+            user_img_path = os.path.join(app.config['USER_IMAGE_UPLOADS'], user_img.filename)
+            user_img.save(user_img_path)
             connectDB = sql_connection()
             cur = connectDB.cursor()
-            statement = "INSERT INTO users (username, role, password, user_join, user_age) VALUES (?, ?, ?, ?, ?)"
-            cur.execute(statement, [username, role, pass_enc, user_join, user_age])
+            statement = "INSERT INTO users (username, role, password, user_join, user_age, user_img) VALUES (?, ?, ?, ?, ?, ?)"
+            cur.execute(statement, [username, role, pass_enc, user_join, user_age, user_img.filename])
             connectDB.commit()
             cur.close
             return redirect(url_for('panelUsuarios'))
@@ -117,6 +123,7 @@ def crearUsuario():
 @app.route('/showuser/<int:user_id>', methods=['GET'])
 def verUsuario(user_id):
     connectDB = sql_connection()
+    connectDB.row_factory = sqlite3.Row
     cur = connectDB.cursor()
     consulta = "SELECT * FROM users WHERE user_id=?"
     cur = cur.execute(consulta, [user_id])
@@ -129,6 +136,7 @@ def verUsuario(user_id):
 def editarUsuario(user_id):
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM users WHERE user_id=?"
         cur = cur.execute(consulta, [user_id])
@@ -148,9 +156,12 @@ def actualizarUsuario(user_id):
             password = escape(request.form['password'])
             enc= hashlib.sha256(password.encode())
             pass_enc= enc.hexdigest()
+            user_img = request.files['user_img']
+            user_img_path = os.path.join(app.config['USER_IMAGE_UPLOADS'], user_img.filename)
+            user_img.save(user_img_path)
             cur = connectDB.cursor()
-            consulta = "UPDATE users SET username = ?, role = ?, password = ? WHERE user_id = ?"
-            cur.execute(consulta, [username, role, pass_enc, user_id])
+            consulta = "UPDATE users SET username = ?, role = ?, password = ?, user_img = ? WHERE user_id = ?"
+            cur.execute(consulta, [username, role, pass_enc, user_img.filename, user_id])
             connectDB.commit()
             cur.close
             return redirect(url_for('panelUsuarios'))
@@ -161,6 +172,7 @@ def actualizarUsuario(user_id):
 def borrarUsuario(user_id):
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute('DELETE FROM users WHERE user_id={0}'.format(user_id))
         connectDB.commit()
@@ -174,6 +186,7 @@ def borrarUsuario(user_id):
 def panelProductos():
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM products")
         product_data = cur.fetchall()
@@ -192,23 +205,27 @@ def crearProducto():
             product_description = escape(request.form['product_description'])
             product_retail = escape(request.form['product_retail'])
             product_trade = escape(request.form['product_trade'])
+            product_img = request.files['product_img']
+            product_img_path = os.path.join(app.config['PRODUCT_IMAGE_UPLOADS'], product_img.filename)
+            product_img.save(product_img_path)
             connectDB = sql_connection()
             cur = connectDB.cursor()
-            statement = "INSERT INTO products (productname, providers, available_amount, least_amount, product_description, product_retail, product_trade) VALUES (?, ?, ?, ?, ?, ?, ?)"
-            cur.execute(statement, [productname, providers, available_amount, least_amount, product_description, product_retail, product_trade])
+            statement = "INSERT INTO products (productname, providers, available_amount, least_amount, product_description, product_retail, product_trade, product_img) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            cur.execute(statement, [productname, providers, available_amount, least_amount, product_description, product_retail, product_trade, product_img.filename])
             connectDB.commit()
             cur.close
+
             return redirect(url_for('panelProductos'))
         else:
             return render_template('crearProducto.html')
     return redirect("/")
-
 
 # GET(SHOW) - PRODUCT
 @app.route('/showproduct/<int:product_id>', methods=['GET'])
 def verProducto(product_id):
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM products WHERE product_id=?"
         cur = cur.execute(consulta, [product_id])
@@ -222,6 +239,7 @@ def verProducto(product_id):
 def editarProducto(product_id):
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM products WHERE product_id=?"
         cur = cur.execute(consulta, [product_id])
@@ -231,7 +249,7 @@ def editarProducto(product_id):
     return redirect("/")
 
 # UPDATE - PRODUCT
-@app.route('/updateproduct/<int:product_id>', methods=['GET', 'POST'])
+@app.route('/updateproduct/<int:product_id>/', methods=['GET', 'POST'])
 def actualizarProducto(product_id):
     if 'usuario' in session and session["role"]== "Superadministrador":
         if request.method == 'POST':
@@ -243,9 +261,12 @@ def actualizarProducto(product_id):
             product_description = escape(request.form['product_description'])
             product_retail = escape(request.form['product_retail'])
             product_trade = escape(request.form['product_trade'])
+            product_img = request.files['product_img']
+            product_img_path = os.path.join(app.config['PRODUCT_IMAGE_UPLOADS'], product_img.filename)
+            product_img.save(product_img_path)
             cur = connectDB.cursor()
-            consulta = "UPDATE products SET productname = ?, providers = ?, available_amount = ?, least_amount = ?, product_description = ?, product_retail = ?, product_trade = ? WHERE product_id = ?"
-            cur.execute(consulta, [productname, providers, available_amount, least_amount, product_description, product_retail, product_trade, product_id])
+            consulta = "UPDATE products SET productname = ?, providers = ?, available_amount = ?, least_amount = ?, product_description = ?, product_retail = ?, product_trade = ?, product_img = ? WHERE product_id = ?"
+            cur.execute(consulta, [productname, providers, available_amount, least_amount, product_description, product_retail, product_trade, product_img.filename, product_id])
             connectDB.commit()
             cur.close
             return redirect(url_for('panelProductos'))
@@ -257,6 +278,7 @@ def actualizarProducto(product_id):
 def borrarProducto(product_id):
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute('DELETE FROM products WHERE product_id={0}'.format(product_id))
         connectDB.commit()
@@ -270,6 +292,7 @@ def borrarProducto(product_id):
 def panelProveedores():
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM providers")
         provider_data = cur.fetchall()
@@ -287,10 +310,13 @@ def crearProveedor():
             celular = escape(request.form['celular'])
             email = escape(request.form['email'])
             location = escape(request.form['location'])        
+            provider_img = request.files['provider_img']
+            provider_img_path = os.path.join(app.config['PROVIDER_IMAGE_UPLOADS'], provider_img.filename)
+            provider_img.save(provider_img_path)
             connectDB = sql_connection()
             cur = connectDB.cursor()
-            statement = "INSERT INTO providers (providername, products, phone, celular, email, location) VALUES (?, ?, ?, ?, ?, ?)"
-            cur.execute(statement, [providername, products, phone, celular, email, location])
+            statement = "INSERT INTO providers (providername, products, phone, celular, email, location, provider_img) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            cur.execute(statement, [providername, products, phone, celular, email, location, provider_img.filename])
             connectDB.commit()
             cur.close
             return redirect(url_for('panelProveedores'))
@@ -303,6 +329,7 @@ def crearProveedor():
 def verProveedor(provider_id):
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM providers WHERE provider_id=?"
         cur = cur.execute(consulta, [provider_id])
@@ -316,6 +343,7 @@ def verProveedor(provider_id):
 def editarProveedor(provider_id):
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM providers WHERE provider_id=?"
         cur = cur.execute(consulta, [provider_id])
@@ -336,9 +364,12 @@ def actualizarProveedor(provider_id):
             celular = escape(request.form['celular'])
             email = escape(request.form['email'])
             location = escape(request.form['location'])
+            provider_img = request.files['provider_img']
+            provider_img_path = os.path.join(app.config['PROVIDER_IMAGE_UPLOADS'], provider_img.filename)
+            provider_img.save(provider_img_path)
             cur = connectDB.cursor()
-            consulta = "UPDATE providers SET providername = ?, products = ?, phone = ?, celular = ?, email = ?, location = ? WHERE provider_id = ?"
-            cur.execute(consulta, [providername, products, phone, celular, email, location, provider_id])
+            consulta = "UPDATE providers SET providername = ?, products = ?, phone = ?, celular = ?, email = ?, location = ?, provider_img = ? WHERE provider_id = ?"
+            cur.execute(consulta, [providername, products, phone, celular, email, location, provider_img.filename, provider_id])
             connectDB.commit()
             cur.close
             return redirect(url_for('panelProveedores'))
@@ -349,13 +380,14 @@ def actualizarProveedor(provider_id):
 def borrarProveedor(provider_id):
     if 'usuario' in session and session["role"]== "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute('DELETE FROM providers WHERE provider_id={0}'.format(provider_id))
         connectDB.commit()
         return redirect(url_for('panelProveedores'))
     return redirect("/")
 
-#------Administrador------------------------------------------------------------------------------------------
+### ADMINISTRADOR 
 
 ## ADMIN - USUARIOS
 # GET (LIST) - USER
@@ -363,6 +395,7 @@ def borrarProveedor(provider_id):
 def panelUsuariosAdmin():
     if 'usuario' in session and session["role"]== "Administrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM users")
         #Nueva variable para que traiga todo lo de la tabla
@@ -375,6 +408,7 @@ def panelUsuariosAdmin():
 def panelProductosAdmin():
     if 'usuario' in session and session["role"]== "Administrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM products")
         product_data = cur.fetchall()
@@ -386,6 +420,7 @@ def panelProductosAdmin():
 def panelProveedoresAdmin():
     if 'usuario' in session and session["role"]== "Administrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM providers")
         provider_data = cur.fetchall()
@@ -399,6 +434,7 @@ def panelProveedoresAdmin():
 def verUsuarioAdmin(user_id):
     if 'usuario' in session and session["role"]== "Administrador" or "Superadministrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM users WHERE user_id=?"
         cur = cur.execute(consulta, [user_id])
@@ -409,19 +445,6 @@ def verUsuarioAdmin(user_id):
 
 #---------Producto-----------------------------------------------------------------------------------------
 #ADMIN
-# GET(SHOW) - PRODUCT
-@app.route('/showproductAdmin/<int:product_id>', methods=['GET'])
-def verProductoAdmin(product_id):
-    if 'usuario' in session and session["role"]== "Administrador":
-        connectDB = sql_connection()
-        cur = connectDB.cursor()
-        consulta = "SELECT * FROM products WHERE product_id=?"
-        cur = cur.execute(consulta, [product_id])
-        product_data = cur.fetchone()
-        cur.close
-        return render_template('verProductoAdministrador.html', products = product_data)
-    return redirect("/")
-
 # POST - PRODUCT
 @app.route('/newProductAdmin/', methods=['GET','POST'])
 def crearProductoAdmin():
@@ -434,15 +457,33 @@ def crearProductoAdmin():
             product_description = escape(request.form['product_description'])
             product_retail = escape(request.form['product_retail'])
             product_trade = escape(request.form['product_trade'])
+            product_img = request.files['product_img']
+            product_img_path = os.path.join(app.config['PRODUCT_IMAGE_UPLOADS'], product_img.filename)
+            product_img.save(product_img_path)
             connectDB = sql_connection()
             cur = connectDB.cursor()
-            statement = "INSERT INTO products (productname, providers, available_amount, least_amount, product_description, product_retail, product_trade) VALUES (?, ?, ?, ?, ?, ?, ?)"
-            cur.execute(statement, [productname, providers, available_amount, least_amount, product_description, product_retail, product_trade])
+            statement = "INSERT INTO products (productname, providers, available_amount, least_amount, product_description, product_retail, product_trade, product_img) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            cur.execute(statement, [productname, providers, available_amount, least_amount, product_description, product_retail, product_trade, product_img.filename])
             connectDB.commit()
             cur.close
+
             return redirect(url_for('panelProductosAdmin'))
         else:
             return render_template('crearProductoAdministrador.html')
+    return redirect("/")
+
+# GET(SHOW) - PRODUCT
+@app.route('/showproductAdmin/<int:product_id>', methods=['GET'])
+def verProductoAdmin(product_id):
+    if 'usuario' in session and session["role"]== "Administrador":
+        connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
+        cur = connectDB.cursor()
+        consulta = "SELECT * FROM products WHERE product_id=?"
+        cur = cur.execute(consulta, [product_id])
+        product_data = cur.fetchone()
+        cur.close
+        return render_template('verProductoAdministrador.html', products = product_data)
     return redirect("/")
 
 # EDIT - PRODUCT
@@ -450,6 +491,7 @@ def crearProductoAdmin():
 def editarProductoAdmin(product_id):
     if 'usuario' in session and session["role"]== "Administrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM products WHERE product_id=?"
         cur = cur.execute(consulta, [product_id])
@@ -471,9 +513,12 @@ def actualizarProductoAdmin(product_id):
             product_description = escape(request.form['product_description'])
             product_retail = escape(request.form['product_retail'])
             product_trade = escape(request.form['product_trade'])
+            product_img = request.files['product_img']
+            product_img_path = os.path.join(app.config['PRODUCT_IMAGE_UPLOADS'], product_img.filename)
+            product_img.save(product_img_path)
             cur = connectDB.cursor()
-            consulta = "UPDATE products SET productname = ?, providers = ?, available_amount = ?, least_amount = ?, product_description = ?, product_retail = ?, product_trade = ? WHERE product_id = ?"
-            cur.execute(consulta, [productname, providers, available_amount, least_amount, product_description, product_retail, product_trade, product_id])
+            consulta = "UPDATE products SET productname = ?, providers = ?, available_amount = ?, least_amount = ?, product_description = ?, product_retail = ?, product_trade = ?, product_img = ? WHERE product_id = ?"
+            cur.execute(consulta, [productname, providers, available_amount, least_amount, product_description, product_retail, product_trade, product_img.filename, product_id])
             connectDB.commit()
             cur.close
             return redirect(url_for('panelProductosAdmin'))
@@ -484,6 +529,7 @@ def actualizarProductoAdmin(product_id):
 def borrarProductoAdmin(product_id):
     if 'usuario' in session and session["role"]== "Administrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute('DELETE FROM products WHERE product_id={0}'.format(product_id))
         connectDB.commit()
@@ -498,6 +544,7 @@ def borrarProductoAdmin(product_id):
 def verProveedorAdmin(provider_id):
     if 'usuario' in session and session["role"]== "Administrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM providers WHERE provider_id=?"
         cur = cur.execute(consulta, [provider_id])
@@ -517,10 +564,13 @@ def crearProveedorAdmin():
             celular = escape(request.form['celular'])
             email = escape(request.form['email'])
             location = escape(request.form['location'])        
+            provider_img = request.files['provider_img']
+            provider_img_path = os.path.join(app.config['PROVIDER_IMAGE_UPLOADS'], provider_img.filename)
+            provider_img.save(provider_img_path)
             connectDB = sql_connection()
             cur = connectDB.cursor()
-            statement = "INSERT INTO providers (providername, products, phone, celular, email, location) VALUES (?, ?, ?, ?, ?, ?)"
-            cur.execute(statement, [providername, products, phone, celular, email, location])
+            statement = "INSERT INTO providers (providername, products, phone, celular, email, location, provider_img) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            cur.execute(statement, [providername, products, phone, celular, email, location, provider_img.filename])
             connectDB.commit()
             cur.close
             return redirect(url_for('panelProveedoresAdmin'))
@@ -534,6 +584,7 @@ def crearProveedorAdmin():
 def editarProveedorAdmin(provider_id):
     if 'usuario' in session and session["role"]== "Administrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM providers WHERE provider_id=?"
         cur = cur.execute(consulta, [provider_id])
@@ -555,9 +606,12 @@ def actualizarProveedorAdmin(provider_id):
             celular = escape(request.form['celular'])
             email = escape(request.form['email'])
             location = escape(request.form['location'])
+            provider_img = request.files['provider_img']
+            provider_img_path = os.path.join(app.config['PROVIDER_IMAGE_UPLOADS'], provider_img.filename)
+            provider_img.save(provider_img_path)
             cur = connectDB.cursor()
-            consulta = "UPDATE providers SET providername = ?, products = ?, phone = ?, celular = ?, email = ?, location = ? WHERE provider_id = ?"
-            cur.execute(consulta, [providername, products, phone, celular, email, location, provider_id])
+            consulta = "UPDATE providers SET providername = ?, products = ?, phone = ?, celular = ?, email = ?, location = ?, provider_img = ? WHERE provider_id = ?"
+            cur.execute(consulta, [providername, products, phone, celular, email, location, provider_img.filename, provider_id])
             connectDB.commit()
             cur.close
             return redirect(url_for('panelProveedoresAdmin'))
@@ -568,6 +622,7 @@ def actualizarProveedorAdmin(provider_id):
 def borrarProveedorAdmin(provider_id):
     if 'usuario' in session and session["role"]== "Administrador":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute('DELETE FROM providers WHERE provider_id={0}'.format(provider_id))
         connectDB.commit()
@@ -583,6 +638,7 @@ def borrarProveedorAdmin(provider_id):
 def panelProductosusu():
     if 'usuario' in session and session["role"]== "Empleado":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM products")
         product_data = cur.fetchall()
@@ -595,6 +651,7 @@ def panelProductosusu():
 def panelProveedoresusu():
     if 'usuario' in session and session["role"]== "Empleado":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM providers")
         provider_data = cur.fetchall()
@@ -607,6 +664,7 @@ def panelProveedoresusu():
 def verProductousu(product_id):
     if 'usuario' in session and session["role"]== "Empleado":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM products WHERE product_id=?"
         cur = cur.execute(consulta, [product_id])
@@ -620,6 +678,7 @@ def verProductousu(product_id):
 def verProveedorusu(provider_id):
     if 'usuario' in session and session["role"]== "Empleado":
         connectDB = sql_connection()
+        connectDB.row_factory = sqlite3.Row
         cur = connectDB.cursor()
         consulta = "SELECT * FROM providers WHERE provider_id=?"
         cur = cur.execute(consulta, [provider_id])

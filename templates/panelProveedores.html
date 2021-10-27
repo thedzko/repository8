@@ -46,7 +46,7 @@
                 <!-- Contenido superior -->
                 <nav class="top-content">
                     <!-- Items -->
-                    <a href="/usuarios" class="item item-1">
+                    <a href="/usuarios/" class="item item-1">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--sidepanel-font-inactive-color)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V18c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-1.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05.02.01.03.03.04.04 1.14.83 1.93 1.94 1.93 3.41V18c0 .35-.07.69-.18 1H22c.55 0 1-.45 1-1v-1.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                         <h2>Usuarios</h2>
                     </a>
@@ -64,7 +64,6 @@
                     <!-- Contenedor -->
                     <div class="content-container-saludo">
                         <!-- Items -->
-
                         <div class="container-text">
                             {%if session.role == "Superadministrador" %}
                             <h3 class="text-role">Superadministrador</h3>
@@ -123,7 +122,7 @@
                         <!-- Columnas/Items -->
                         <div class="tci tci-1">
                             <a href="/showprovider/{{provider.0}}">
-                                <img src="../static/img/yokohama.png" alt="" class="tci-img">
+                                <img src="/static/img/uploads/provider/{{provider['provider_img']}}" alt="" class="tci-img">
                             </a>
                         </div>
                         <div class="tci tci-2">
