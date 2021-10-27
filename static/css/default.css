@@ -43,6 +43,7 @@
     --header-background-color: #ffffff;
     --header-itemss-height: 50%;
     --header-search-background-color: #e6e6e6;
+    --header-search-background-color: #f5f5f5;
     --header-button-background-color: #000000;
     /* Sidepanel */
     --sidepanel-background-color: #000000;
@@ -51,6 +52,7 @@
     --sidepanel-border: 1px solid var(--sidepanel-font-inactive-color);
     /* Content */
     --content-background-color: #e6e6e6;
+    --content-background-color: #f5f5f5;
     /* Dashboard */
     --dashboard-background-color: #ffffff;
     --dashboard-button-edit-color: #808080;
@@ -68,6 +70,7 @@
     --passive-off-button-text-color: #000000;
     --passive-off-button-font-weight: var(--font-regular);
     --passive-on-button-background-color: #e6e6e6;
+    --passive-on-button-background-color: #f5f5f5;
 }
 
 html,
