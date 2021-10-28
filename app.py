@@ -79,6 +79,18 @@ def home():
     return render_template('login.html')
 
 
+#@app.route('/usuarios/', methods=['GET'])
+#def cantidad_usuarios():
+    #connectDB = sql_connection()
+    #cur = connectDB.cursor()
+   # cur.execute("SELECT * FROM users")
+    #user_cant= len(cur.fetchall())
+
+    #return render_template('panelUsuarios.html', cant = user_cant)
+    
+#print("cantidad usuarios:", cantidad_usuarios())
+
+
 ## USUARIOS
 # GET (LIST) - USER
 @app.route('/usuarios/', methods=['GET'])
@@ -90,8 +102,12 @@ def panelUsuarios():
         cur.execute("SELECT * FROM users")
         #Nueva variable para que traiga todo lo de la tabla
         user_data = cur.fetchall()
-        return render_template('panelUsuarios.html', users = user_data)
+       #user_cant = len(cur.fetchall())
+
+        return render_template('panelUsuarios.html', users = user_data, UsersCant = len(user_data))
+
     return redirect("/")
+
 
 # POST - USER
 @app.route('/newUser', methods=['GET','POST'])
@@ -190,7 +206,7 @@ def panelProductos():
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM products")
         product_data = cur.fetchall()
-        return render_template('panelProductos.html', products = product_data)
+        return render_template('panelProductos.html', products = product_data,  ProductCant = len(product_data))
     return redirect("/")
 
 # POST - PRODUCT
@@ -296,7 +312,7 @@ def panelProveedores():
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM providers")
         provider_data = cur.fetchall()
-        return render_template('panelProveedores.html', providers = provider_data)
+        return render_template('panelProveedores.html', providers = provider_data,  ProvidersCant = len(provider_data))
     return redirect("/")
 
 # POST - PROVIDER
@@ -400,7 +416,7 @@ def panelUsuariosAdmin():
         cur.execute("SELECT * FROM users")
         #Nueva variable para que traiga todo lo de la tabla
         user_data = cur.fetchall()
-        return render_template('panelUsuariosAdministrador.html', users = user_data)
+        return render_template('panelUsuariosAdministrador.html', users = user_data,  UserAdCant = len(user_data))
     return redirect("/")
 
 #ADMIN - PRODUCTOS
@@ -412,7 +428,7 @@ def panelProductosAdmin():
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM products")
         product_data = cur.fetchall()
-        return render_template('panelProductosAdministrador.html', products = product_data)
+        return render_template('panelProductosAdministrador.html', products = product_data,  ProductAdCant = len(product_data))
     return redirect("/")
 
 #ADMIN - PROVEEDORES
@@ -424,7 +440,7 @@ def panelProveedoresAdmin():
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM providers")
         provider_data = cur.fetchall()
-        return render_template('panelProveedoresAdministrador.html', providers = provider_data)
+        return render_template('panelProveedoresAdministrador.html', providers = provider_data,  ProvidersAdCant = len(provider_data))
     return redirect("/")
 #--------------------------------------------------------------------------------------
 
@@ -642,7 +658,7 @@ def panelProductosusu():
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM products")
         product_data = cur.fetchall()
-        return render_template('panelProductosUsuario.html', products = product_data)
+        return render_template('panelProductosUsuario.html', products = product_data,  ProductUsCant = len(product_data))
     return redirect("/")
 
 ## USUARIO - PROVEEDORES
@@ -655,7 +671,7 @@ def panelProveedoresusu():
         cur = connectDB.cursor()
         cur.execute("SELECT * FROM providers")
         provider_data = cur.fetchall()
-        return render_template('panelProveedoresUsuario.html', providers = provider_data)
+        return render_template('panelProveedoresUsuario.html', providers = provider_data,  ProvidersUsCant = len(provider_data))
     return redirect("/")
 
 #USUARIO - VER PRODUCTO
