@@ -383,7 +383,7 @@ input:hover {
 }
 
 input~label {
-    /* padding: 0 1% 0 1%; */
+    padding: 0 1% 0 1%;
     top: -16px;
     left: 0;
     z-index: 2;
@@ -391,11 +391,12 @@ input~label {
     font-size: calc(var(--font-size)*0.8);
 }
 
-input {
+
+/* input {
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
     border-bottom: 2px solid #000000;
-}
+} */
 
 .dbutton-1:hover {
     background-color: var(--sidepanel-active-background-color);

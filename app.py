@@ -103,7 +103,7 @@ def crearUsuario():
             password = escape(request.form['password'])
             enc= hashlib.sha256(password.encode())
             pass_enc= enc.hexdigest()
-            user_join =escape(datetime.now())
+            user_join = escape(datetime.now())
             user_age = escape(datetime.now())
             user_img = request.files['user_img']            
             user_img_path = os.path.join(app.config['USER_IMAGE_UPLOADS'], user_img.filename)
