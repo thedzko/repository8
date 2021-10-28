@@ -351,7 +351,7 @@ def verProveedor(provider_id):
         cur = cur.execute(consulta, [provider_id])
         provider_data = cur.fetchone()
         cur.close
-        return render_template('verProveedorAdministrador.html', providers = provider_data)
+        return render_template('verProveedor.html', providers = provider_data)
     return redirect("/")
 
 # EDIT - PROVIDER
